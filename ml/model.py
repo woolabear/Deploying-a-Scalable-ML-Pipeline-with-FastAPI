@@ -65,6 +65,7 @@ def inference(model, X):
     # TODO: implement the function
     pass
 
+
 def save_model(model, path):
 
     """ Serializes model to a file.
@@ -78,6 +79,7 @@ def save_model(model, path):
     """
     # TODO: implement the function
     pass
+
 
 def load_model(path):
 
