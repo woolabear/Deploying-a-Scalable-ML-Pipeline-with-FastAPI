@@ -15,6 +15,7 @@ The dataset contains 32,561 records and is split into 80% training and 20% testi
 Evaluation was performed on the 20% test split.
 
 ## Metrics
+The model's performance was evaluated using Precision, Recall, and F1 score. The model achieved the following performance:
 Precision: 0.7391 | Recall: 0.6384 | F1: 0.6851
 
 ## Ethical Considerations
