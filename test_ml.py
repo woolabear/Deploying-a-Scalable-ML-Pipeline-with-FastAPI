@@ -3,6 +3,7 @@ import pytest
 from sklearn.ensemble import RandomForestClassifier
 from ml.data import process_data
 from ml.model import compute_model_metrics, train_model
+import numpy as np
 
 
 # Fixture
@@ -126,33 +127,16 @@ def test_train_model(mock_census_data):
 # Test three
 def test_metrics(mock_census_data):
     """
-    This function tests if the metrics function returns the expected outputs.
+    This function tests if the metrics function returns the exact outputs
+    for precision, recall, and fbeta
     """
-    cat_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
-    ]
-    X, y, _, _ = process_data(
-        mock_census_data,
-        categorical_features=cat_features,
-        label="salary",
-        training=True,
-    )
-    model = train_model(X, y)
-    preds = model.predict(X)
+    # Actual values
+    y = np.array([1, 1, 1, 0])
+    preds = np.array([1, 1, 0, 0])
+
     precision, recall, fbeta = compute_model_metrics(y, preds)
 
-    # Confirms all metrics are returned as floats
-    assert isinstance(precision, float)
-    assert isinstance(recall, float)
-    assert isinstance(fbeta, float)
-    # Confirms metrics are valid probability numbers between 0 and 1
-    assert 0.0 <= precision <= 1.0
-    assert 0.0 <= recall <= 1.0
-    assert 0.0 <= fbeta <= 1.0
+    # Confirms exact metrics
+    assert precision == 1.0
+    np.testing.assert_allclose(recall, 2 / 3, atol=1e-4)
+    np.testing.assert_allclose(fbeta, 0.8, atol=1e-4)
